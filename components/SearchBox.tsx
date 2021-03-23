@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 type Props = {
     keyword: string;
@@ -21,7 +22,10 @@ export const SearchBox: FC<Props> = (props) => {
                 router.push(`/?${searchParams}`);
             }
         }}>
-            <input type="text" name="" id="" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+            <div className="search">
+                <FaSearch />
+                <input type="text" placeholder="検索ワード" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+            </div>
         </form>
     );
 };
