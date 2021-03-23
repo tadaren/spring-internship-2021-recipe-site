@@ -1,0 +1,14 @@
+.recipe-box{
+  display: flex;
+}
+.recipe-box > div{
+  width: 50%;
+}
+.recipe-box-image{
+  align-items: center;
+  display: flex;
+}
+.recipe-image{
+  max-width: 100%;
+}
+

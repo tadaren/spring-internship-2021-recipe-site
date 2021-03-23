@@ -7,12 +7,16 @@ type Props = {
 
 export const RecipeBox: FC<Props> = (props) => {
     return (
-        <div>
-            {props.recipe.image_url && <img className="recipeImage" src={props.recipe.image_url} width="100%" />}
-            
-            <h3>{props.recipe.title}</h3>
+        <div className="recipe-box">
+            <div className="recipe-box-image">
+                {props.recipe.image_url && <img className="recipe-image" src={props.recipe.image_url} />}
+            </div>
 
-            <div>{props.recipe.description}</div>
+            <div>
+                <h3>{props.recipe.title}</h3>
+
+                <div>{props.recipe.description}</div>
+            </div>
         </div>
     );
 };
