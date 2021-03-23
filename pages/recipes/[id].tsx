@@ -36,8 +36,11 @@ const RecipePage: NextPage<Props> = (props) => {
                     <h2>{recipe.title}</h2>
 
                     <div>
-                        <span>{recipe.author}</span>
-                        <span>{recipe.published_at}</span>
+                        {recipe.author.user_name}
+                        
+                    </div>
+                    <div>
+                        {recipe.published_at}
                     </div>
 
                     <p>{recipe.description}</p>
