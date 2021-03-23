@@ -15,7 +15,16 @@ export type Recipe = {
     related_recipes: number[];
 }
 
-export async function getRecipes(): Promise<Recipe[]> {
+export type GetResponse = {
+    recipes: Recipe[];
+
+    links: {
+        next?: string;
+        prev?: string;
+    };
+}
+
+export async function getRecipes(): Promise<GetResponse> {
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     if(api_key === undefined){
         throw new Error();
@@ -25,7 +34,7 @@ export async function getRecipes(): Promise<Recipe[]> {
     });
     const recipes = await res.json();
     console.log(recipes.recipes);
-    return recipes.recipes as Recipe[];
+    return recipes as GetResponse;
 }
 
 export async function getRecipe(id: number): Promise<Recipe> {
@@ -39,4 +48,20 @@ export async function getRecipe(id: number): Promise<Recipe> {
     const recipe = await res.json();
     console.log(recipe);
     return recipe as Recipe;
+}
+
+export async function searchRecipe(keyword: string): Promise<GetResponse>{
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    if (api_key === undefined) {
+        throw new Error();
+    }
+    const params = {
+        keyword
+    }
+    const searchParams = new URLSearchParams(params);
+    const res = await fetch(`https://internship-recipe-api.ckpd.co/search?${searchParams}`, {
+        headers: { 'X-Api-Key': api_key }
+    });
+    const searchResponse = await res.json();
+    return searchResponse as GetResponse;
 }

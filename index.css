@@ -11,4 +11,7 @@
 .recipe-image{
   max-width: 100%;
 }
-
+.pagebox{
+  display: flex;
+  justify-content: space-between;
+}
