@@ -1,8 +1,11 @@
+import Link from 'next/link';
 
 export function Header() {
     return (
         <header>
-            <h1>レシピサイト</h1>
+            <Link href='/'>
+                <h1>レシピサイト</h1>
+            </Link>
         </header>
     );
 };
