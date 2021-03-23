@@ -24,16 +24,19 @@ export type GetResponse = {
     };
 }
 
-export async function getRecipes(): Promise<GetResponse> {
+export async function getRecipes(page?: number): Promise<GetResponse> {
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     if(api_key === undefined){
         throw new Error();
     }
-    const res = await fetch('https://internship-recipe-api.ckpd.co/recipes', {
+    const params = {
+        page: `${(page !== undefined ? page : 1)}`
+    }
+    const searchParams = new URLSearchParams(params);
+    const res = await fetch(`https://internship-recipe-api.ckpd.co/recipes?${searchParams}`, {
         headers: { 'X-Api-Key': api_key }
     });
     const recipes = await res.json();
-    console.log(recipes.recipes);
     return recipes as GetResponse;
 }
 
@@ -50,13 +53,15 @@ export async function getRecipe(id: number): Promise<Recipe> {
     return recipe as Recipe;
 }
 
-export async function searchRecipe(keyword: string): Promise<GetResponse>{
+export async function searchRecipe(keyword: string, page?: number): Promise<GetResponse>{
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     if (api_key === undefined) {
         throw new Error();
     }
+    console.log(page);
     const params = {
-        keyword
+        keyword,
+        page: `${(page !== undefined ? page : 1)}`
     }
     const searchParams = new URLSearchParams(params);
     const res = await fetch(`https://internship-recipe-api.ckpd.co/search?${searchParams}`, {

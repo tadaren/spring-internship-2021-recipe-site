@@ -4,26 +4,50 @@ import { getRecipes, Recipe, searchRecipe } from "../lib/recipe";
 import Link from "next/link";
 import { Header } from "../components/Header";
 import { useRouter } from "next/router";
+import { NextPage } from "next";
 
 
-function Home() {
+export const Home: NextPage = () => {
     const router = useRouter();
     const [recipes, setRecipes] = useState<Recipe[] | null>(null);
-    const [prevURL, setPrevURL] = useState<string | null>(null);
-    const [nextURL, setNextURL] = useState<string | null>(null);
+    const [prevURL, setPrev] = useState<string | null>(null);
+    const [nextURL, setNext] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            console.log(router.query.search);
+            const currentPageNumber = (typeof router.query.page === 'string') ? Number(router.query.page) : 1;
             if (router.query.search !== undefined && typeof router.query.search === 'string') {
-                const searchRes = await searchRecipe(router.query.search);
+                const searchRes = await searchRecipe(router.query.search, currentPageNumber);
                 console.log(searchRes);
                 setRecipes(searchRes.recipes);
-                setPrevURL(searchRes.links.prev !== undefined ? searchRes.links.prev : null);
-                setNextURL(searchRes.links.next !== undefined ? searchRes.links.next : null);
+                if (searchRes.links.prev !== undefined) {
+                    const searchParams = new URLSearchParams({ search: router.query.search, page: `${currentPageNumber - 1}` });
+                    setPrev(`/?${searchParams}`);
+                } else {
+                    setPrev(null);
+                }
+                if (searchRes.links.next !== undefined) {
+                    const searchParams = new URLSearchParams({ search: router.query.search, page: `${currentPageNumber + 1}` });
+                    setNext(`/?${searchParams}`);
+                } else {
+                    setNext(null);
+                }
             } else {
-                const recipes = await getRecipes();
-                setRecipes(recipes.recipes);
+                const result = await getRecipes(currentPageNumber);
+                console.log(result);
+                setRecipes(result.recipes);
+                if (result.links.prev !== undefined) {
+                    const searchParams = new URLSearchParams({ page: `${currentPageNumber - 1}` });
+                    setPrev(`/?${searchParams}`);
+                } else {
+                    setPrev(null);
+                }
+                if (result.links.next !== undefined) {
+                    const searchParams = new URLSearchParams({ page: `${currentPageNumber + 1}` });
+                    setNext(`/?${searchParams}`);
+                } else {
+                    setNext(null);
+                }
             }
         })();
     }, [router.query]);
