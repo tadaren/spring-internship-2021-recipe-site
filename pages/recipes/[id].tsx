@@ -29,22 +29,27 @@ const RecipePage: NextPage<Props> = (props) => {
             <Header />
             {recipe && (
                 <main>
-                    <h2>{recipe.title}</h2>
-
                     {recipe.image_url && (
                         <img src={recipe.image_url} alt="レシピ画像" width="100%"/>
                     )}
 
+                    <h2>{recipe.title}</h2>
+
+                    <div>
+                        <span>{recipe.author}</span>
+                        <span>{recipe.published_at}</span>
+                    </div>
+
                     <p>{recipe.description}</p>
 
                     <h3>材料</h3>
-                    <ol>
+                    <ul>
                         {recipe.ingredients.map((ing, i) => (
                             <li key={i}>
                                 {ing.name}: {ing.quantity}
                             </li>
                         ))}
-                    </ol>
+                    </ul>
 
                     <h3>手順</h3>
                     <ol>
