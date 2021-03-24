@@ -49,7 +49,6 @@ export async function getRecipe(id: number): Promise<Recipe> {
         headers: { 'X-Api-Key': api_key }
     });
     const recipe = await res.json();
-    console.log(recipe);
     return recipe as Recipe;
 }
 
