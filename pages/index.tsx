@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { RecipeBox } from "../components/RecipeBox";
 import { getRecipes, Recipe, searchRecipe } from "../lib/recipe";
 import Link from "next/link";
-import { Header } from "../components/Header";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
+import Layout from "../components/Layout";
 
 
 export const Home: NextPage = () => {
@@ -55,8 +55,7 @@ export const Home: NextPage = () => {
     if (recipes === null) return <div>loading...</div>;
 
     return (
-        <div>
-            <Header />
+        <Layout>
             {recipes.map((recipe) => (
                 <Link href={`/recipes/${recipe.id}`} key={recipe.id} >
                     <div>
@@ -76,7 +75,7 @@ export const Home: NextPage = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </Layout>
     );
 }
 
