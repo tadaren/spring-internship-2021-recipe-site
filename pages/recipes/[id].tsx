@@ -1,6 +1,4 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { GetServerSideProps, NextPage } from "next";
 import Layout from "../../components/Layout";
 import { getRecipe, Recipe } from "../../lib/recipe";
 
@@ -9,20 +7,7 @@ type Props = {
 }
 
 const RecipePage: NextPage<Props> = (props) => {
-    const router = useRouter();
-    const [recipe, setRecipe] = useState<Recipe | null>(null);
-
-    useEffect(() => {
-        (async () => {
-            const id = Number(router.query.id);
-            if(id === 0 || isNaN(id)){
-                setRecipe(null);
-            }else{
-                const recipe = await getRecipe(id);
-                setRecipe(recipe);
-            }
-        })();
-    }, [router.query.id]);
+    const { recipe } = props;
 
     return (
         <Layout title={recipe ? recipe.title : undefined } description={recipe ? recipe.description : undefined } image={recipe ? recipe.image_url : undefined }>
@@ -63,6 +48,23 @@ const RecipePage: NextPage<Props> = (props) => {
             )}
         </Layout>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const id = Number(context.params?.id);
+
+    if (id === 0 || isNaN(id)) {
+        return {
+            notFound: true
+        }
+    } else {
+        const recipe = await getRecipe(id);
+        return {
+            props: {
+                recipe
+            }
+        }
+    }
 }
 
 export default RecipePage;
