@@ -3,56 +3,17 @@ import { RecipeBox } from "../components/RecipeBox";
 import { getRecipes, Recipe, searchRecipe } from "../lib/recipe";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Layout from "../components/Layout";
 
+type Props = {
+    recipes: Recipe[];
+    prevURL: string | null;
+    nextURL: string | null;
+}
 
-export const Home: NextPage = () => {
-    const router = useRouter();
-    const [recipes, setRecipes] = useState<Recipe[] | null>(null);
-    const [prevURL, setPrev] = useState<string | null>(null);
-    const [nextURL, setNext] = useState<string | null>(null);
-
-    useEffect(() => {
-        (async () => {
-            const currentPageNumber = (typeof router.query.page === 'string') ? Number(router.query.page) : 1;
-            if (router.query.search !== undefined && typeof router.query.search === 'string') {
-                const searchRes = await searchRecipe(router.query.search, currentPageNumber);
-                console.log(searchRes);
-                setRecipes(searchRes.recipes);
-                if (searchRes.links.prev !== undefined) {
-                    const searchParams = new URLSearchParams({ search: router.query.search, page: `${currentPageNumber - 1}` });
-                    setPrev(`/?${searchParams}`);
-                } else {
-                    setPrev(null);
-                }
-                if (searchRes.links.next !== undefined) {
-                    const searchParams = new URLSearchParams({ search: router.query.search, page: `${currentPageNumber + 1}` });
-                    setNext(`/?${searchParams}`);
-                } else {
-                    setNext(null);
-                }
-            } else {
-                const result = await getRecipes(currentPageNumber);
-                console.log(result);
-                setRecipes(result.recipes);
-                if (result.links.prev !== undefined) {
-                    const searchParams = new URLSearchParams({ page: `${currentPageNumber - 1}` });
-                    setPrev(`/?${searchParams}`);
-                } else {
-                    setPrev(null);
-                }
-                if (result.links.next !== undefined) {
-                    const searchParams = new URLSearchParams({ page: `${currentPageNumber + 1}` });
-                    setNext(`/?${searchParams}`);
-                } else {
-                    setNext(null);
-                }
-            }
-        })();
-    }, [router.query]);
-
-    if (recipes === null) return <div>loading...</div>;
+export const Home: NextPage<Props> = (props) => {
+    const { recipes, prevURL, nextURL } = props;
 
     return (
         <Layout>
@@ -77,6 +38,49 @@ export const Home: NextPage = () => {
             </div>
         </Layout>
     );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const currentPageNumber = (typeof context.query.page === 'string') ? Number(context.query.page) : 1;
+    if (context.query.search !== undefined && typeof context.query.search === 'string') {
+        const searchRes = await searchRecipe(context.query.search, currentPageNumber);
+        let prevURL = null;
+        if (searchRes.links.prev !== undefined) {
+            const searchParams = new URLSearchParams({ search: context.query.search, page: `${currentPageNumber - 1}` });
+            prevURL = `/?${searchParams}`;
+        }
+        let nextURL = null;
+        if (searchRes.links.next !== undefined) {
+            const searchParams = new URLSearchParams({ search: context.query.search, page: `${currentPageNumber + 1}` });
+            nextURL = `/?${searchParams}`;
+        }
+        return {
+            props: {
+                recipes: searchRes.recipes,
+                prevURL,
+                nextURL
+            }
+        }
+    } else {
+        const result = await getRecipes(currentPageNumber);
+        let prevURL = null;
+        if (result.links.prev !== undefined) {
+            const searchParams = new URLSearchParams({ page: `${currentPageNumber - 1}` });
+            prevURL = `/?${searchParams}`;
+        }
+        let nextURL = null;
+        if (result.links.next !== undefined) {
+            const searchParams = new URLSearchParams({ page: `${currentPageNumber + 1}` });
+            nextURL = `/?${searchParams}`;
+        }
+        return {
+            props: {
+                recipes: result.recipes,
+                prevURL,
+                nextURL
+            }
+        }
+    }
 }
 
 export default Home;
