@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import { RecipeBox } from "../components/RecipeBox";
 import { getRecipes, Recipe, searchRecipe } from "../lib/recipe";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { GetServerSideProps, NextPage } from "next";
 import Layout from "../components/Layout";
 
