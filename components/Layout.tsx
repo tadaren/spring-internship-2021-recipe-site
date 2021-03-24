@@ -1,20 +1,20 @@
-import { ReactNode } from "react"
-import { Header } from "./Header"
-import Head from "next/head"
+import { ReactNode, FC } from 'react';
+import Head from 'next/head';
+import { Header } from './Header';
 
 type Props = {
     children?: ReactNode;
     title?: string;
     description?: string;
     image?: string | null;
-}
+};
 
-export default function Layout({
+export const Layout: FC = ({
     children,
-    title = "レシピサイト",
+    title = 'レシピサイト',
     description,
-    image
-}: Props) {
+    image,
+}: Props) => {
     return (
         <div>
             <Head>
@@ -27,4 +27,4 @@ export default function Layout({
             {children}
         </div>
     );
-}
+};
