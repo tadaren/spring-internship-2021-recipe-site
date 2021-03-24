@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Header } from "../../components/Header";
+import Layout from "../../components/Layout";
 import { getRecipe, Recipe } from "../../lib/recipe";
 
 type Props = {
@@ -25,8 +25,7 @@ const RecipePage: NextPage<Props> = (props) => {
     }, [router.query.id]);
 
     return (
-        <div>
-            <Header />
+        <Layout title={recipe ? recipe.title : undefined } description={recipe ? recipe.description : undefined } image={recipe ? recipe.image_url : undefined }>
             {recipe && (
                 <main>
                     {recipe.image_url && (
@@ -62,7 +61,7 @@ const RecipePage: NextPage<Props> = (props) => {
                     </ol>
                 </main>
             )}
-        </div>
+        </Layout>
     )
 }
 
