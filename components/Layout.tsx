@@ -9,7 +9,7 @@ type Props = {
     image?: string | null;
 };
 
-export const Layout: FC = ({
+export const Layout: FC<Props> = ({
     children,
     title = 'レシピサイト',
     description,
