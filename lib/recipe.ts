@@ -79,10 +79,10 @@ export async function searchRecipe(
         },
     );
     const searchResponse = await res.json();
-    if (searchResponse.message && searchResponse.message === 'Not Found'){
+    if (searchResponse.message && searchResponse.message === 'Not Found') {
         return {
             recipes: [],
-            links: {}
+            links: {},
         } as GetResponse;
     }
     return searchResponse as GetResponse;
