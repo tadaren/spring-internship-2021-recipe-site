@@ -1,4 +1,9 @@
-import { GetServerSideProps, NextPage } from 'next';
+import {
+    GetServerSideProps,
+    GetStaticPaths,
+    GetStaticProps,
+    NextPage,
+} from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
@@ -8,7 +13,7 @@ import {
     getIsBookmarked,
     putBookmark,
 } from '../../lib/bookmark';
-import { getRecipe, Recipe } from '../../lib/recipe';
+import { getRecipe, getRecipes, Recipe } from '../../lib/recipe';
 
 type Props = {
     recipe: Recipe;
@@ -131,12 +136,13 @@ const RecipePage: NextPage<Props> = (props) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
     const id = Number(context.params?.id);
 
     if (id === 0 || isNaN(id)) {
         return {
             notFound: true,
+            revalidate: 60,
         };
     } else {
         const recipe = await getRecipe(id);
@@ -144,8 +150,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             props: {
                 recipe,
             },
+            revalidate: 600,
         };
     }
+};
+
+export const getStaticPaths: GetStaticPaths = async (context) => {
+    const res = await getRecipes();
+    const recipes = res.recipes;
+    return {
+        paths: recipes.map((recipe) => {
+            return { params: { id: recipe.id.toString() } };
+        }),
+        fallback: 'blocking',
+    };
 };
 
 export default RecipePage;
