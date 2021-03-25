@@ -12,15 +12,17 @@ export const RecipeBox: FC<Props> = (props) => {
             <h3 className="font-bold">{props.recipe.title}</h3>
             <div className="flex items-center justify-between">
                 <div className="w-5/12">
-                    {props.recipe.image_url && (
-                        <Image
-                            src={props.recipe.image_url}
-                            alt="レシピ画像"
-                            width={640}
-                            height={360}
-                            layout="responsive"
-                        />
-                    )}
+                    <Image
+                        src={
+                            props.recipe.image_url
+                                ? props.recipe.image_url
+                                : '/noimage.png'
+                        }
+                        alt="レシピ画像"
+                        width={640}
+                        height={360}
+                        layout="responsive"
+                    />
                 </div>
 
                 <div className="w-6/12 h-full">

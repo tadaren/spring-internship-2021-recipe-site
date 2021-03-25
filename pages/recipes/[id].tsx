@@ -14,25 +14,32 @@ const RecipePage: NextPage<Props> = (props) => {
         publishedDate.getMonth() + 1
     }/${publishedDate.getDate()}`;
 
+    const image_url =
+        recipe && recipe.image_url !== null
+            ? recipe.image_url
+            : 'https://fujimoto-spring-internship-2021-recipe-site.vercel.app/noimage.png';
+
     return (
         <Layout
             title={recipe ? recipe.title : undefined}
             description={recipe ? recipe.description : undefined}
-            image={recipe ? recipe.image_url : undefined}
+            image={image_url}
         >
             {recipe && (
                 <main className="mx-4">
-                    {recipe.image_url && (
-                        <div className="m-2">
-                            <Image
-                                src={recipe.image_url}
-                                alt="レシピ画像"
-                                width={640}
-                                height={360}
-                                layout="responsive"
-                            />
-                        </div>
-                    )}
+                    <div className="m-2">
+                        <Image
+                            src={
+                                recipe.image_url !== null
+                                    ? recipe.image_url
+                                    : '/noimage.png'
+                            }
+                            alt="レシピ画像"
+                            width={640}
+                            height={360}
+                            layout="responsive"
+                        />
+                    </div>
 
                     <h2 className="font-bold text-xl">{recipe.title}</h2>
 
