@@ -43,6 +43,25 @@ export async function getRecipes(page?: number): Promise<GetResponse> {
     return recipes as GetResponse;
 }
 
+export async function getRecipesById(ids: number[]): Promise<GetResponse> {
+    const api_key = process.env.NEXT_PUBLIC_API_KEY;
+    if (api_key === undefined) {
+        throw new Error();
+    }
+    const params = {
+        id: ids.join(),
+    };
+    const searchParams = new URLSearchParams(params);
+    const res = await fetch(
+        `https://internship-recipe-api.ckpd.co/recipes?${searchParams}`,
+        {
+            headers: { 'X-Api-Key': api_key },
+        },
+    );
+    const recipes = await res.json();
+    return recipes as GetResponse;
+}
+
 export async function getRecipe(id: number): Promise<Recipe> {
     const api_key = process.env.NEXT_PUBLIC_API_KEY;
     if (api_key === undefined) {

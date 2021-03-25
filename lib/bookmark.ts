@@ -31,3 +31,10 @@ export const getIsBookmarked = async (id: number) => {
 export const deleteBookmark = async (id: number) => {
     db.bookmarks.delete(id);
 };
+
+export const allBookmarks = async () => {
+    const ids = await db.bookmarks.toArray();
+    return ids.map((id) => {
+        return id.id;
+    });
+};
