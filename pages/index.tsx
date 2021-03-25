@@ -3,6 +3,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { RecipeBox } from '../components/RecipeBox';
 import { getRecipes, Recipe, searchRecipe } from '../lib/recipe';
 import { Layout } from '../components/Layout';
+import { Paging } from '../components/Paging';
 
 type Props = {
     recipes: Recipe[];
@@ -22,10 +23,7 @@ export const Home: NextPage<Props> = (props) => {
                     </div>
                 </Link>
             ))}
-            <div className="pagebox">
-                <div>{prevURL && <Link href={prevURL}>前のページ</Link>}</div>
-                <div>{nextURL && <Link href={nextURL}>次のページ</Link>}</div>
-            </div>
+            <Paging prevURL={prevURL} nextURL={nextURL} />
         </Layout>
     );
 };

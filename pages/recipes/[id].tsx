@@ -1,4 +1,5 @@
 import { GetServerSideProps, NextPage } from 'next';
+import Image from 'next/image';
 import { Layout } from '../../components/Layout';
 import { getRecipe, Recipe } from '../../lib/recipe';
 
@@ -8,6 +9,10 @@ type Props = {
 
 const RecipePage: NextPage<Props> = (props) => {
     const { recipe } = props;
+    const publishedDate = new Date(recipe.published_at);
+    const formattedDate = `${publishedDate.getFullYear()}/${
+        publishedDate.getMonth() + 1
+    }/${publishedDate.getDate()}`;
 
     return (
         <Layout
@@ -16,37 +21,59 @@ const RecipePage: NextPage<Props> = (props) => {
             image={recipe ? recipe.image_url : undefined}
         >
             {recipe && (
-                <main>
+                <main className="mx-4">
                     {recipe.image_url && (
-                        <img
-                            src={recipe.image_url}
-                            alt="レシピ画像"
-                            width="100%"
-                        />
+                        <div className="m-2">
+                            <Image
+                                src={recipe.image_url}
+                                alt="レシピ画像"
+                                width={640}
+                                height={360}
+                                layout="responsive"
+                            />
+                        </div>
                     )}
 
-                    <h2>{recipe.title}</h2>
+                    <h2 className="font-bold text-xl">{recipe.title}</h2>
 
-                    <div>{recipe.author.user_name}</div>
-                    <div>{recipe.published_at}</div>
+                    <div className="flex justify-between">
+                        <div className="text-gray-700">
+                            {recipe.author.user_name}
+                        </div>
+                        <div className="text-gray-600">{formattedDate}</div>
+                    </div>
 
-                    <p>{recipe.description}</p>
+                    <p className="mt-3">{recipe.description}</p>
 
-                    <h3>材料</h3>
-                    <ul>
-                        {recipe.ingredients.map((ing, i) => (
-                            <li key={i}>
-                                {ing.name}: {ing.quantity}
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="bg-gray-100 mt-3">
+                        <h3 className="bg-gray-200 text-lg pl-2 font-semibold">
+                            材料
+                        </h3>
+                        <ul>
+                            {recipe.ingredients.map(
+                                (ing, i) =>
+                                    ing.name &&
+                                    ing.quantity && (
+                                        <li key={i} className="mt-1 ml-1">
+                                            {ing.name}: {ing.quantity}
+                                        </li>
+                                    ),
+                            )}
+                        </ul>
+                    </div>
 
-                    <h3>手順</h3>
-                    <ol>
-                        {recipe.steps.map((step, i) => (
-                            <li key={i}>{step}</li>
-                        ))}
-                    </ol>
+                    <div className="bg-gray-100 mt-3">
+                        <h3 className="bg-gray-200 text-lg pl-2 font-semibold">
+                            手順
+                        </h3>
+                        <ol className="list-decimal ml-6">
+                            {recipe.steps.map((step, i) => (
+                                <li key={i} className="mt-1">
+                                    {step}
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
                 </main>
             )}
         </Layout>

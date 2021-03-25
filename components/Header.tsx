@@ -11,7 +11,11 @@ export const Header: FC = () => {
     return (
         <header>
             <Link href="/">
-                <h1>レシピサイト</h1>
+                <div className="bg-gray-300 p-2">
+                    <h1 className="text-4xl font-semibold text-gray-900">
+                        レシピサイト
+                    </h1>
+                </div>
             </Link>
             <SearchBox keyword={keyword} />
         </header>

@@ -24,14 +24,17 @@ export const SearchBox: FC<Props> = (props) => {
                 }
             }}
         >
-            <div className="search">
-                <FaSearch />
-                <input
-                    type="text"
-                    placeholder="検索ワード"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                />
+            <div className="p-1">
+                <div className="flex items-center h-10 px-2 border rounded-lg">
+                    <FaSearch className="mr-2" />
+                    <input
+                        className="w-full"
+                        type="text"
+                        placeholder="検索ワード"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                    />
+                </div>
             </div>
         </form>
     );
