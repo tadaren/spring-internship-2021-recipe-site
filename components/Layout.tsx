@@ -13,7 +13,7 @@ export const Layout: FC<Props> = ({
     children,
     title = 'レシピサイト',
     description = 'レシピを検索して表示できるサイト',
-    image,
+    image = 'https://fujimoto-spring-internship-2021-recipe-site.vercel.app/top.png',
 }: Props) => {
     return (
         <div>

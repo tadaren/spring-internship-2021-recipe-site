@@ -17,7 +17,7 @@ const RecipePage: NextPage<Props> = (props) => {
     const image_url =
         recipe && recipe.image_url !== null
             ? recipe.image_url
-            : 'https://fujimoto-spring-internship-2021-recipe-site.vercel.app/noimage.png';
+            : 'https://fujimoto-spring-internship-2021-recipe-site.vercel.app/top.png';
 
     return (
         <Layout
