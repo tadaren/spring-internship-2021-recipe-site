@@ -9,7 +9,7 @@ type Props = {
 export const RecipeBox: FC<Props> = (props) => {
     return (
         <div className="px-3 py-1 m-1 shadow">
-            <h3 className="font-bold">{props.recipe.title}</h3>
+            <h2 className="font-bold">{props.recipe.title}</h2>
             <div className="flex items-center justify-between">
                 <div className="w-5/12">
                     <Image
