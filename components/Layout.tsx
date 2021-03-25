@@ -12,7 +12,7 @@ type Props = {
 export const Layout: FC<Props> = ({
     children,
     title = 'レシピサイト',
-    description,
+    description = 'レシピを検索して表示できるサイト',
     image,
 }: Props) => {
     return (
