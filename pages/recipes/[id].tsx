@@ -1,6 +1,13 @@
 import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { FaRegStar, FaStar } from 'react-icons/fa';
 import { Layout } from '../../components/Layout';
+import {
+    deleteBookmark,
+    getIsBookmarked,
+    putBookmark,
+} from '../../lib/bookmark';
 import { getRecipe, Recipe } from '../../lib/recipe';
 
 type Props = {
@@ -9,6 +16,8 @@ type Props = {
 
 const RecipePage: NextPage<Props> = (props) => {
     const { recipe } = props;
+    const [isBookmarked, setBookmark] = useState<boolean>(false);
+
     const publishedDate = new Date(recipe.published_at);
     const formattedDate = `${publishedDate.getFullYear()}/${
         publishedDate.getMonth() + 1
@@ -18,6 +27,24 @@ const RecipePage: NextPage<Props> = (props) => {
         recipe && recipe.image_url !== null
             ? recipe.image_url
             : 'https://fujimoto-spring-internship-2021-recipe-site.vercel.app/top.png';
+
+    const toBookmark = () => {
+        console.log('toBookmark');
+        setBookmark(true);
+        putBookmark(props.recipe.id);
+    };
+    const unBookmark = () => {
+        console.log('unBookmark');
+        setBookmark(false);
+        deleteBookmark(props.recipe.id);
+    };
+
+    useEffect(() => {
+        (async () => {
+            const data = await getIsBookmarked(props.recipe.id);
+            setBookmark(data !== undefined);
+        })();
+    }, []);
 
     return (
         <Layout
@@ -42,6 +69,23 @@ const RecipePage: NextPage<Props> = (props) => {
                     </div>
 
                     <h2 className="font-bold text-xl">{recipe.title}</h2>
+                    <div className="flex flex-row-reverse">
+                        {isBookmarked ? (
+                            <button
+                                className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center"
+                                onClick={unBookmark}
+                            >
+                                <FaStar color="#FCD34D" />
+                            </button>
+                        ) : (
+                            <button
+                                className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center"
+                                onClick={toBookmark}
+                            >
+                                <FaRegStar color="#FCD34D" />
+                            </button>
+                        )}
+                    </div>
 
                     <div className="flex justify-between">
                         <div className="text-gray-700">
