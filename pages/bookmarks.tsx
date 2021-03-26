@@ -48,6 +48,9 @@ export const Home: NextPage = () => {
 
     return (
         <Layout>
+            <div className="text-lg font-bold ml-2 border-b">
+                ブックマーク一覧
+            </div>
             {recipes ? (
                 <>
                     {recipes.map((recipe) => (
