@@ -74,7 +74,7 @@ const RecipePage: NextPage<Props> = (props) => {
                         </div>
                         {isBookmarked ? (
                             <button
-                                className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center"
+                                className="bg-gray-100 rounded-full w-6 h-6 flex items-center justify-center"
                                 onClick={unBookmark}
                                 aria-label="ブックマーク解除"
                             >
@@ -82,7 +82,7 @@ const RecipePage: NextPage<Props> = (props) => {
                             </button>
                         ) : (
                             <button
-                                className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center"
+                                className="bg-gray-100 rounded-full w-6 h-6 flex items-center justify-center"
                                 onClick={toBookmark}
                                 aria-label="ブックマーク登録"
                             >
