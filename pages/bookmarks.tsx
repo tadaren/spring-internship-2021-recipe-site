@@ -48,14 +48,20 @@ export const Home: NextPage = () => {
 
     return (
         <Layout>
-            {recipes.map((recipe) => (
-                <Link href={`/recipes/${recipe.id}`} key={recipe.id}>
-                    <a>
-                        <RecipeBox recipe={recipe} />
-                    </a>
-                </Link>
-            ))}
-            <Paging prevURL={prevURL} nextURL={nextURL} />
+            {recipes ? (
+                <>
+                    {recipes.map((recipe) => (
+                        <Link href={`/recipes/${recipe.id}`} key={recipe.id}>
+                            <a>
+                                <RecipeBox recipe={recipe} />
+                            </a>
+                        </Link>
+                    ))}
+                    <Paging prevURL={prevURL} nextURL={nextURL} />
+                </>
+            ) : (
+                <div>ブックマークしているレシピはありません</div>
+            )}
         </Layout>
     );
 };
