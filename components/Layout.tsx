@@ -19,6 +19,14 @@ export const Layout: FC<Props> = ({
         <div>
             <Head>
                 <title>レシピサイト</title>
+                <meta
+                    content="レシピを検索して表示し，ブックマークもできるよ"
+                    name="description"
+                />
+                <meta
+                    name="viewport"
+                    content="width=device-width,initial-scale=1"
+                />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={image ? image : undefined} />
