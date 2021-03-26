@@ -41,7 +41,7 @@ export const Home: NextPage = () => {
                 const searchParams = new URLSearchParams({
                     page: `${currentPageNumber + 1}`,
                 });
-                setPrevURL(`/bookmarks/?${searchParams}`);
+                setNextURL(`/bookmarks/?${searchParams}`);
             }
         })();
     }, []);
