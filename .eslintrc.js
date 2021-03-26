@@ -63,5 +63,6 @@ module.exports = {
         tabWidth: 4,
       },
     ],
+    'jsx-a11y/anchor-is-valid': 'off',
   },
 };

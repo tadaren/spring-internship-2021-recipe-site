@@ -1,9 +1,4 @@
-import {
-    GetServerSideProps,
-    GetStaticPaths,
-    GetStaticProps,
-    NextPage,
-} from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';

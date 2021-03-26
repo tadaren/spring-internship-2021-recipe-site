@@ -13,20 +13,20 @@ export const Paging: FC<Props> = (props) => {
         <div className="flex justify-between">
             {prevURL ? (
                 <Link href={prevURL}>
-                    <div className="w-32 h-12 text-center align-middle">
+                    <a className="w-32 h-12 text-center align-middle">
                         <FaArrowCircleLeft className="inline" />
                         前のページ
-                    </div>
+                    </a>
                 </Link>
             ) : (
                 <div></div>
             )}
             {nextURL ? (
                 <Link href={nextURL}>
-                    <div className="w-32 h-12 text-center align-middle">
+                    <a className="w-32 h-12 text-center align-middle">
                         次のページ
                         <FaArrowCircleRight className="inline" />
-                    </div>
+                    </a>
                 </Link>
             ) : (
                 <div></div>

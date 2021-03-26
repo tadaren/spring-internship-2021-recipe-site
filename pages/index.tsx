@@ -18,9 +18,9 @@ export const Home: NextPage<Props> = (props) => {
         <Layout>
             {recipes.map((recipe) => (
                 <Link href={`/recipes/${recipe.id}`} key={recipe.id}>
-                    <div>
+                    <a>
                         <RecipeBox recipe={recipe} />
-                    </div>
+                    </a>
                 </Link>
             ))}
             <Paging prevURL={prevURL} nextURL={nextURL} />
