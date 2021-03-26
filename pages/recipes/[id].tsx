@@ -59,7 +59,7 @@ const RecipePage: NextPage<Props> = (props) => {
         >
             {recipe && (
                 <main className="mx-4">
-                    <div className="m-2">
+                    <div className="w-full h-48 relative">
                         <Image
                             src={
                                 recipe.image_url !== null
@@ -67,9 +67,8 @@ const RecipePage: NextPage<Props> = (props) => {
                                     : '/noimage.png'
                             }
                             alt="レシピ画像"
-                            width={640}
-                            height={360}
-                            layout="responsive"
+                            layout="fill"
+                            objectFit={'cover'}
                         />
                     </div>
 
@@ -82,6 +81,7 @@ const RecipePage: NextPage<Props> = (props) => {
                             <button
                                 className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center"
                                 onClick={unBookmark}
+                                aria-label="ブックマーク解除"
                             >
                                 <FaStar color="#FCD34D" />
                             </button>
@@ -89,6 +89,7 @@ const RecipePage: NextPage<Props> = (props) => {
                             <button
                                 className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center"
                                 onClick={toBookmark}
+                                aria-label="ブックマーク登録"
                             >
                                 <FaRegStar color="#FCD34D" />
                             </button>
