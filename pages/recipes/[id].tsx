@@ -74,7 +74,10 @@ const RecipePage: NextPage<Props> = (props) => {
                     </div>
 
                     <h2 className="font-bold text-xl">{recipe.title}</h2>
-                    <div className="flex flex-row-reverse">
+                    <div className="flex justify-between">
+                        <div className="text-gray-700">
+                            {recipe.author.user_name}
+                        </div>
                         {isBookmarked ? (
                             <button
                                 className="bg-gray-300 rounded-full w-6 h-6 flex items-center justify-center"
@@ -91,11 +94,7 @@ const RecipePage: NextPage<Props> = (props) => {
                             </button>
                         )}
                     </div>
-
-                    <div className="flex justify-between">
-                        <div className="text-gray-700">
-                            {recipe.author.user_name}
-                        </div>
+                    <div className="flex flex-row-reverse">
                         <div className="text-gray-600">{formattedDate}</div>
                     </div>
 
@@ -105,17 +104,22 @@ const RecipePage: NextPage<Props> = (props) => {
                         <h3 className="bg-gray-200 text-lg pl-2 font-semibold">
                             材料
                         </h3>
-                        <ul>
-                            {recipe.ingredients.map(
-                                (ing, i) =>
-                                    ing.name &&
-                                    ing.quantity && (
-                                        <li key={i} className="mt-1 ml-1">
-                                            {ing.name}: {ing.quantity}
-                                        </li>
-                                    ),
-                            )}
-                        </ul>
+                        <div className="px-2">
+                            <table className="w-full">
+                                {recipe.ingredients.map(
+                                    (ing, i) =>
+                                        ing.name &&
+                                        ing.quantity && (
+                                            <tr key={i} className="mt-1 ml-1">
+                                                <td>{ing.name}</td>
+                                                <td className="text-right">
+                                                    {ing.quantity}
+                                                </td>
+                                            </tr>
+                                        ),
+                                )}
+                            </table>
+                        </div>
                     </div>
 
                     <div className="bg-gray-100 mt-3">
