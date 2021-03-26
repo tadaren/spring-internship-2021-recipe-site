@@ -67,7 +67,7 @@ const RecipePage: NextPage<Props> = (props) => {
                         />
                     </div>
 
-                    <h2 className="font-bold text-xl">{recipe.title}</h2>
+                    <h2 className="font-bold text-xl mt-2">{recipe.title}</h2>
                     <div className="flex justify-between">
                         <div className="text-gray-700">
                             {recipe.author.user_name}
@@ -90,7 +90,7 @@ const RecipePage: NextPage<Props> = (props) => {
                             </button>
                         )}
                     </div>
-                    <div className="flex flex-row-reverse">
+                    <div className="flex justify-end">
                         <div className="text-gray-600">{formattedDate}</div>
                     </div>
 
